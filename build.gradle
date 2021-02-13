@@ -1,0 +1,124 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+/////////////////////////////
+// BuildScript and Plugins //
+/////////////////////////////
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name 'forge'
+            url 'https://files.minecraftforge.net/maven'
+        }
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.0+', changing: true
+    }
+}
+
+plugins {
+    id "com.github.hierynomus.license" version "0.15.0"
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+version = "${minecraft_version}-${mod_version}"
+
+//////////////////
+// Dependencies //
+//////////////////
+
+repositories {
+    maven { // Forge
+        name 'ForgeFS'
+        url 'https://files.minecraftforge.net/maven'
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+}
+
+minecraft {
+    mappings channel: mappings_channel, version: mappings_version
+    runs {
+        client {
+            properties 'forge.logging.console.level': 'debug'
+            properties 'fml.earlyprogresswindow': 'false'
+            properties 'mixin.env.disableRefMap': 'true'
+            workingDirectory project.file('run')
+            mods {
+                templatemod {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            properties 'forge.logging.console.level': 'debug'
+            properties 'mixin.env.disableRefMap': 'true'
+            workingDirectory project.file('run')
+            mods {
+                templatemod {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+///////////////
+// Artifacts //
+//////////////
+
+processResources {
+    filter(ReplaceTokens, tokens: [
+            'VERSION': version.toString(),
+            'LOADER_RANGE': loader_range,
+            'FORGE_RANGE': forge_range,
+            'MINECRAFT_RANGE': minecraft_range,
+    ])
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    //noinspection GroovyAccessibility
+    archiveClassifier = 'deobf'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    //noinspection GroovyAccessibility
+    archiveClassifier = 'sources'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    //noinspection GroovyAccessibility
+    archiveClassifier = 'javadoc'
+}
+
+artifacts {
+    archives deobfJar
+    archives sourcesJar
+    archives javadocJar
+}
+
+///////////////
+// Licencing //
+///////////////
+
+license {
+    header new File(projectDir, 'LICENSE_HEADER')
+
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.author = author
+    ext.name = name
+
+    mapping {
+        java='SLASHSTAR_STYLE'
+    }
+}

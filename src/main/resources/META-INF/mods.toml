@@ -1,0 +1,29 @@
+modLoader="javafml"
+loaderVersion="@LOADER_RANGE@"
+issueTrackerURL="https://github.com/Hemogoblins/TemplateMod/issues"
+license="GPLv3"
+
+[[mods]]
+    modId="templatemod"
+    version="@VERSION@"
+    displayName="Template Mod"
+    authors="Hemogoblins"
+    credits=""
+    description='''
+    Our Mod Template
+    '''
+    displayURL="https://github.com/Hemogoblins/TemplateMod"
+
+[[dependenices.templatemod]]
+    modid="forge"
+    mandatory=true
+    versionRange="@FORGE_RANGE@"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependenices.templatemod]]
+    modid="minecraft"
+    mandatory=true
+    versionRange="@MINECRAFT_RANGE@"
+    ordering="NONE"
+    side="BOTH"
