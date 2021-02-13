@@ -112,7 +112,7 @@ artifacts {
 ///////////////
 
 license {
-    header new File(projectDir, 'LICENSE_HEADER')
+    header new File(projectDir, 'HEADER')
 
     ext.year = Calendar.getInstance().get(Calendar.YEAR)
     ext.author = author
