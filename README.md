@@ -2,7 +2,7 @@
 
 This is our Mod Template.
 
-Note: We do _not_ use gitflow for this repo, all PR's should be made to `master`.
+This repo produces no releases. All other gitflow rules apply.
 
 ## FAQ
 
