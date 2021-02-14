@@ -9,7 +9,13 @@ In order to maintain the quality and cohesiveness of our codebase,
 we ask you to keep the following in mind when contributing
 
 ### Code Style
-All source code and pull requests should follow the [Google Java Style Guide].
+All source code and pull requests should more or less follow the [Google Java Style Guide].
+Notable deviations include:
+
+- 4 space indents
+- 120 character line limit
+
+Maybe one day there'll be an autoformatter that's not a pain to use, but for now we'll just not be too strict.
 
 ### Git
 We follow [Gitflow] as our branching model.
